@@ -3,22 +3,25 @@
     color: #c6d2db;
 }
 
-.init-title {
-    vertical-align: middle;
+header {
+    background-color: unset;
     text-align: center;
 }
 
 h1 {
     font-weight: bold;
+    font-size: 300%;
+    vertical-align: top;
 }
 
 h3 {
     font-weight: 200;
+    vertical-align: bottom;
 }
 
 body {
-    background-image: url("background.webp"), url("background-fallback.png");
-    background-size: auto;
+    background-image: url("static/background.webp"), url("static/background-fallback.png");
+    background-size: cover;
     background-repeat: no-repeat;
     background-color: #2a2f33;
 }
