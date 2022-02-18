@@ -19,6 +19,11 @@
     vertical-align: bottom;
 }
 
+.smalltitle {
+    text-align: left;
+    font-weight: 600;
+}
+
 body {
     background-image: url("static/background.webp"), url("static/background-fallback.png");
     background-size: cover;
@@ -26,7 +31,7 @@ body {
     background-color: #2a2f33;
 }
 
-href {
+a {
     text-decoration: solid underline;
 }
 
@@ -36,4 +41,8 @@ nav {
     padding: 3px 12px;
     border-radius: 4px;
     background-color: rgba(24, 26, 28, 0.5);
+}
+
+ul {
+    list-style: none;
 }
