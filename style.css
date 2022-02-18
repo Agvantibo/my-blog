@@ -3,18 +3,18 @@
     color: #c6d2db;
 }
 
-header {
+.bigtitle {
     background-color: unset;
     text-align: center;
 }
 
-h1 {
+.bigtitle h1 {
     font-weight: bold;
     font-size: 300%;
     vertical-align: top;
 }
 
-h3 {
+.bigtitle h3 {
     font-weight: 200;
     vertical-align: bottom;
 }
