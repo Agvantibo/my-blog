@@ -24,8 +24,14 @@
 }
 
 .smalltitle {
-    text-align: left;
     font-weight: 600;
+    font-family: 'Source Code Pro', monospace;
+    font-size: 1cm;
+}
+
+.smalltitle img {
+    width: auto;
+    height: 2cm;
 }
 
 body {
