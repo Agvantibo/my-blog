@@ -37,7 +37,6 @@ def trunk(in_file, out_file, title, assume_yes, elements_path, nav_units_path):
 
     html_main = md(in_md)
     result_html = minify(synthesize_page(elements, title, nav_units, nav_units_path, html_main, out_file))
-
     out_html.write(result_html)
 
 
@@ -45,7 +44,9 @@ def synthesize_page(elements, title, nav_units, nav_units_path, html_main, out_f
     result_html = ''
     for i in elements:
         wip_template = open(i.rstrip('\n'), 'r').read()
+        print(i)
         wip_template = wip_template.format(title=title, nav_units=synthesize_nav(nav_units, nav_units_path, title, out_file), main=html_main)
+        result_html += wip_template + '\n'
     return result_html
 
 
