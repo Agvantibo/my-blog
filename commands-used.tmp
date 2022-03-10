@@ -1,0 +1,2 @@
+cms/generate_page.py -t "Home Page" -e lists/main.list posts/blank.md site/index.html
+cms/generate_page.py -t 'Ipsum Lorem' posts/initial-post.md
