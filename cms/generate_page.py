@@ -14,12 +14,12 @@ builtin_nav_units = 'site/nav-units.html'
 @click.option('-e', '--elements-path', type=click.Path(exists=True), required=False, help='Alternative elements file to synthesize a different page')
 @click.option('-n', '--nav-units-path', type=click.Path(exists=True), required=False, help='Alternate existing nav elements file')
 @click.argument('in_file', type=click.Path(exists=True))
-@click.argument('out_file', type=click.File('rb'), required=False)
+@click.argument('out_file', type=click.Path(exists=True), required=False)
 def trunk(in_file, out_file, title, assume_yes, elements_path, nav_units_path):
     if not exists('./.magic'):
         click.confirm('This script is supposed to be run from the website root. Are you sure you want to continue?', abort=True)
     if not out_file:
-        out_file = 'post_' + title + '.html'
+        out_file = 'site/posts/post_' + title + '.html'
     if not elements_path:
         global builtin_elements
         elements_path = builtin_elements
@@ -32,8 +32,8 @@ def trunk(in_file, out_file, title, assume_yes, elements_path, nav_units_path):
     
     in_md = open(in_file, 'r').read()
     out_html = open(out_file, 'w')
-    elements = list(open(elements_path, 'r').readlines())
-    nav_units = list(open(nav_units_path, 'r').readlines())
+    elements = open(elements_path, 'r').readlines()
+    nav_units = ''.join(open(nav_units_path, 'r').readlines())
 
     html_main = md(in_md)
     result_html = minify(synthesize_page(elements, title, nav_units, nav_units_path, html_main, out_file))
@@ -52,7 +52,8 @@ def synthesize_page(elements, title, nav_units, nav_units_path, html_main, out_f
 
 def synthesize_nav(nav_units, nav_units_path, title, out_file):
     nav_nunit = '<li><span class="fa-li"><i class="fa-solid fa-angle-right"></i></span><h4><a href="{path}">{title}</a></h4></li>'.format(path=relpath(out_file, start='./site/'), title=title)
-    open(nav_units_path, 'a').write(nav_nunit + '\n')
+    if not  nav_nunit in nav_units:
+        open(nav_units_path, 'w').write(nav_nunit + '\n' + nav_units + '\n')
     return open(nav_units_path, 'r').read().rstrip('\n')
 
 
