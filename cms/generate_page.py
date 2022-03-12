@@ -15,8 +15,8 @@ builtin_nav_units = 'site/nav-units.html'
 @click.option('-m/-r', '--minified-page/--readable-page', help='Toggle minification of page for development/ethical purposes', default=True)
 @click.option('-e', '--elements-path', type=click.Path(exists=True), required=False, help='Alternative elements file to synthesize a different page', metavar='elements.list')
 @click.option('-n', '--nav-units-path', type=click.Path(exists=True), required=False, help='Alternate existing nav elements file', metavar='file.html')
-@click.argument('in_file', type=click.Path(exists=True), metavar='file.md')
-@click.argument('out_file', type=click.Path(exists=True), required=False, metavar='file.html')
+@click.argument('in_file', type=click.Path(exists=True))
+@click.argument('out_file', type=click.Path(exists=True), required=False)
 def trunk(in_file, out_file, title, assume_yes, elements_path, nav_units_path, minified_page):
     'Generate a sigle page from a markdown file IN_FILE using a template list and output the resulting HTML to OUT_FILE'
     if not exists('./.magic'): click.confirm('This script is supposed to be run from the website root. Are you sure you want to continue?', abort=True)
