@@ -4,6 +4,7 @@ from markdown import markdown as md
 from os.path import exists, relpath
 from htmlmin import minify
 from html5print import HTMLBeautifier as hb
+import yaml as ym
 import click
 
 builtin_elements = 'lists/post.list'
