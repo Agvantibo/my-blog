@@ -1,0 +1,10 @@
+templates:
+  - templates/head-main.html
+  - templates/big-header.html
+  - templates/nav.html:
+      subtemplates:
+        - templates/nav-units.html
+  - templates/main.html:
+      special: main
+  - templates/ads.html
+  - templates/footer.html
