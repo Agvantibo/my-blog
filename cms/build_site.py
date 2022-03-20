@@ -1,12 +1,26 @@
 #!/usr/bin/env python3
 
-import click
+builtin_metalist='./lists/site.mlist'
+builtin_nav_path='./site/nav-units.html'
+
 import os
-import yaml as ym
+from typing_extensions import Required
+import click
 
 @click.command()
-@click.option('-r', '--override-root', help='Override the site generation root')
-@click.option('-b', '--build-directory', help='Specifies the site build output directory')
-@click.argument('site_config', type=click.Path(exists=True), required=False)
-def trunk(override_root, build_directory, batch_config):
-    
+@click.option('-n', '--nav-units-path', type=click.Path(exists=True), required=False, help='Alternate existing nav elements file', metavar='file.html')
+@click.argument('metalist', type=click.Path(exists=True), required=False)
+def trunk(nav_units_path, metalist):
+    if not nav_units_path:
+        global builtin_nav_path
+        nav_units_path = builtin_nav_path
+    if not metalist:
+        global builtin_metalist
+        metalist = builtin_metalist
+    cmds = open(metalist, 'r').readlines()
+    for i in cmds:
+        os.system(i.rstrip('\n'))
+        print('\n\n')
+
+if __name__ == '__main__':
+    trunk()

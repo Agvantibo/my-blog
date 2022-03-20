@@ -7,7 +7,6 @@ authors = ["agvantibo <apicalium@gmail.com>"]
 [tool.poetry.dependencies]
 python = "*"
 click = "*"
-PyYAML = "*"
 Markdown = "*"
 htmlmin = "*"
 html5print = "*"
