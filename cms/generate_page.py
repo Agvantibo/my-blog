@@ -11,6 +11,7 @@ builtin_elements = 'lists/post.list'
 builtin_nav_units = 'site/nav-units.html'
 builtin_nav_single = 'templates/nav-single.html'
 builtin_site_root = './site/'
+builtin_site_prefix = '/'
 
 
 @click.command()
@@ -21,9 +22,10 @@ builtin_site_root = './site/'
 @click.option('-n', '--nav-units-path', type=click.Path(exists=True), required=False, help='Alternate existing nav elements file', metavar='file.html')
 @click.option('-u', '--nav-single-path', type=click.Path(exists=True), required=False, help='Alternate existing nav unit template', metavar='file.html')
 @click.option('-s', '--site-root', type=click.Path(exists=True), help='Directory to write site to', metavar='./site/')
+@click.option('-p', '--site-prefix', help='Server domain name and etc')
 @click.argument('in_file', type=click.Path(exists=True))
 @click.argument('out_file', type=click.Path(), required=False)
-def trunk(in_file, out_file, title, assume_yes, elements_path, nav_units_path, minified_page, site_root, nav_single_path):
+def trunk(in_file, out_file, title, assume_yes, elements_path, nav_units_path, minified_page, site_root, nav_single_path, site_prefix):
     'Generate a sigle page from a markdown file IN_FILE using a template list and output the resulting HTML to OUT_FILE'
     if not exists('./.magic'):
         click.confirm(
@@ -39,6 +41,9 @@ def trunk(in_file, out_file, title, assume_yes, elements_path, nav_units_path, m
     if not nav_single_path:
         global builtin_nav_single
         nav_single_path = builtin_nav_single
+    if not site_prefix:
+        global builtin_site_prefix
+        site_prefix = builtin_site_prefix
     if not exists(nav_units_path):
         file = open(nav_units_path, 'w').write('').close()
     if exists(out_file) and not assume_yes:
@@ -73,7 +78,7 @@ def trunk(in_file, out_file, title, assume_yes, elements_path, nav_units_path, m
 
     html_main = md(in_md)
     result_html = synthesize_page(
-        elements, title, nav_units, nav_single_path, nav_units_path, html_main, out_file)
+        elements, title, nav_units, nav_single_path, nav_units_path, html_main, out_file, site_prefix, site_root)
     if minified_page:
         result_html = minify(result_html)
     else:
@@ -81,20 +86,20 @@ def trunk(in_file, out_file, title, assume_yes, elements_path, nav_units_path, m
     out_html.write(result_html)
 
 
-def synthesize_page(elements, title, nav_units, nav_units_path, nav_single_path, html_main, out_file):
+def synthesize_page(elements, title, nav_units, nav_units_path, nav_single_path, html_main, out_file, site_prefix, site_root):
     result_html = ''
     for i in elements:
         wip_template = open(i.rstrip('\n'), 'r').read()
         print('Concatenating template:', i, end='')
         wip_template = wip_template.format(title=title, nav_units=synthesize_nav(
-            nav_units, nav_single_path, nav_units_path, title, out_file), main=html_main)
+            nav_units, nav_single_path, nav_units_path, title, out_file, site_prefix, site_root), main=html_main)
         result_html += wip_template + '\n'
     return result_html
 
 
-def synthesize_nav(nav_units, nav_units_path, nav_single_path, title, out_file):
+def synthesize_nav(nav_units, nav_units_path, nav_single_path, title, out_file, site_prefix, site_root):
     nav_nunit = ''.join(open(nav_single_path).readlines()).format(
-        path=relpath(out_file, start='./site/'), title=title)
+        path=relpath(out_file, start=site_root), title=title)
     if not nav_nunit in nav_units:
         open(nav_units_path, 'w').write(nav_nunit + '\n' + nav_units + '\n')
     return open(nav_units_path, 'r').read().rstrip('\n')

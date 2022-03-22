@@ -4,7 +4,6 @@ builtin_metalist='./lists/site.mlist'
 builtin_nav_path='./site/nav-units.html'
 
 import os
-from typing_extensions import Required
 import click
 
 @click.command()
