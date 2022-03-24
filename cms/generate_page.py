@@ -101,7 +101,7 @@ def synthesize_nav(nav_units, nav_units_path, nav_single_path, title, out_file, 
     nav_nunit = ''.join(open(nav_single_path).readlines()).format(
         path=site_prefix + relpath(out_file, start=site_root), title=title)
     if not nav_nunit in nav_units:
-        open(nav_units_path, 'w').write(minify(nav_nunit + '\n' + nav_units + '\n'))
+        open(nav_units_path, 'w').write(minify(nav_nunit + '\n' + nav_units + '\n').replace('\\', '/'))
     return open(nav_units_path, 'r').read().rstrip('\n')
 
 
