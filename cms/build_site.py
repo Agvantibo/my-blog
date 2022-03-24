@@ -13,6 +13,12 @@ def trunk(nav_units_path, metalist):
     if not nav_units_path:
         global builtin_nav_path
         nav_units_path = builtin_nav_path
+    if os.path.exists(nav_units_path):
+        click.confirm('A file at ' + nav_units_path +
+                      ' already exists and will be overwritten, do you want to continue?', abort=True)
+        nav_units = open(nav_units_path, 'w')
+        nav_units.write('\n')
+        nav_units.close()
     if not metalist:
         global builtin_metalist
         metalist = builtin_metalist
