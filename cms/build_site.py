@@ -23,9 +23,10 @@ def trunk(nav_units_path, metalist):
         global builtin_metalist
         metalist = builtin_metalist
     cmds = open(metalist, 'r').readlines()
-    for i in cmds:
-        os.system(i.rstrip('\n'))
-        print('\n\n')
+    for i in range(2):
+        for i in cmds:
+            os.system(i.rstrip('\n'))
+            print('\n\n')
 
 if __name__ == '__main__':
     trunk()
